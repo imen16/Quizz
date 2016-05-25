@@ -92,7 +92,7 @@ class Question
      * @param string $categorie
      * @return Question
      */
-    public function setCategorie($nomQuestion)
+    public function setCategorie($categorie)
     {
         $this->categorie = $categorie;
 
