@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Utilisateur
@@ -41,8 +42,24 @@ class Utilisateur
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Categorie", mappedBy="utilisateur")
+     */
+    private $categories;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Reponse", mappedBy="utilisateurs")
+     */
+    private $reponses;
+    
 
-
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection(); 
+        $this->reponses = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -120,5 +137,14 @@ class Utilisateur
     public function getEmail()
     {
         return $this->email;
+    }
+    
+    /**
+     * 
+     * @return ArrayCollection()
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

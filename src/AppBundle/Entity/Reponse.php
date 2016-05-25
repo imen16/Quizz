@@ -40,7 +40,18 @@ class Reponse
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
      */
     private $question;
-
+        
+    /**
+     * @ORM\ManyToMany(targetEntity="Utilisateur", inversedBy="reponses")
+     * @ORM\JoinTable(name="reponses_utilisateurs")
+     */
+    private $utilisateurs;
+    
+    
+    public function __construct()
+    {
+        $this->utilisateurs = new ArrayCollection(); 
+    }
 
     /**
      * Get id

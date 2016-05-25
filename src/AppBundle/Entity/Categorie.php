@@ -33,7 +33,14 @@ class Categorie
      * @ORM\OneToMany(targetEntity="Question", mappedBy="categorie")
      */
     private $questions;
-   
+     
+    /**
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="categories")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+    */
+    private $utilisateur;
+
+
     public function __construct()
     {
             $this->questions = new ArrayCollection();            
@@ -78,5 +85,23 @@ class Categorie
     public function getQuestions()
     {
         return $this->questions;
+    }
+    
+    /**
+     * 
+     * @param Utilisateur $utilisateur
+     * @return Categorie
+     */
+    
+    public function setUtilisateur($utilisateur){
+        $this->utilisateur = $utilisateur;
+        return $this;
+    }
+    /**
+     * 
+     * @return Utilisateur
+     */
+    public function getUtilisateur(){
+        return $this->utilisateur;
     }
 }

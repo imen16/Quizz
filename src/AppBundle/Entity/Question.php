@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Question
@@ -38,10 +39,17 @@ class Question
      * @ORM\OneToMany(targetEntity="Reponse", mappedBy="question")
      */
     private $reponses;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Quizz", inversedBy="questions")
+     * @ORM\JoinTable(name="quizzs_questions")
+     */
+    private $quizzs;
    
     public function __construct()
     {
-            $this->reponses = new ArrayCollection();            
+            $this->reponses = new ArrayCollection();   
+            $this->quizzs = new ArrayCollection();
     }
 
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Quizz
@@ -34,7 +35,16 @@ class Quizz
      * @ORM\Column(name="difficulte", type="string", length=255)
      */
     private $difficulte;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Question", mappedBy="quizzs")
+     */
+    private $questions;
+    
 
+    public function __construct() {
+        $this->questions = new ArrayCollection();
+    }
 
     /**
      * Get id
