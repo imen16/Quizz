@@ -11,16 +11,20 @@ class LoadQuestionData extends AbstractFixture implements OrderedFixtureInterfac
     
     const NOM_QUESTION = 'nomQuestion';
     const CATEGORIE = 'categorie';
-    
+    const REF = 'ref';
+
+
     public function load(ObjectManager $manager) {
         $questions = array(
                             array(
-                               static::NOM_QUESTION => 'Que donne var_dump($a, $b)?',
-                               static::CATEGORIE => $this->getReference('ref-php')
+                               static::NOM_QUESTION => 'Que signifie PHP ?',
+                               static::CATEGORIE => $this->getReference('ref-php'),
+                               static::REF => 'ref-que-signifie-php'
                             ),
                             array(
-                               static::NOM_QUESTION => 'Que signifie PHP ?',
-                               static::CATEGORIE => $this->getReference('ref-php')
+                               static::NOM_QUESTION => "Que signifie l'acronyme HTML ?",
+                               static::CATEGORIE => $this->getReference('ref-html5'),
+                               static::REF => 'ref-que-signifie-html'
                             ),
                         );
         
@@ -29,6 +33,7 @@ class LoadQuestionData extends AbstractFixture implements OrderedFixtureInterfac
             $questionObj->setNomQuestion($question[static::NOM_QUESTION]);
             $questionObj->setCategorie($question[static::CATEGORIE]);
             $manager->persist($questionObj);
+            $this->setReference($question[static::REF], $questionObj);
         }
         $manager->flush();
     }
