@@ -26,6 +26,12 @@ class LoadQuestionData extends AbstractFixture implements OrderedFixtureInterfac
                                static::CATEGORIE => $this->getReference('ref-html5'),
                                static::REF => 'ref-que-signifie-html'
                             ),
+                            array(
+                               static::NOM_QUESTION => 'Que signifie PHP ?',
+                               static::CATEGORIE => $this->getReference('ref-php'),
+                               static::REF => 'ref-que-signifie-php'
+                            ),
+                     
                         );
         
         foreach ($questions as $question){

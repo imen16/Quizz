@@ -4,6 +4,83 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    
+    resource.quizz.collection_operation.get:
+        class:     "Dunglas\ApiBundle\Api\Operation\Operation"
+        public:    false
+        factory:   [ "@api.operation_factory", "createItemOperation" ]
+        arguments: [ "@resource.quizz", "GET" ]
+        
+    resource.quizz.collection_difficulte_operation.get:
+        class:   "Dunglas\ApiBundle\Api\Operation\Operation"
+        public:  false
+        factory: [ "@api.operation_factory", "createCollectionOperation" ]
+        arguments:
+            -    "@resource.quizz"               # Resource
+            -    [ "GET"]                 # Methods
+            -    "/quizz/{difficulte}/"           # Path
+            -    "AppBundle:Quizz:quizz"         # Controller
+            -    "my_custom_route"                 # Route name
+            -    # Context (will be present in Hydra documentation)
+                 "@type":       "hydra:Operation"
+                 "hydra:title": "A custom operation"
+                 "returns":     "xmls:string"    
+                 
+    resource.questions.operation.get:
+        class:   "Dunglas\ApiBundle\Api\Operation\Operation"
+        public:  false
+        factory: [ "@api.operation_factory", "createItemOperation" ]
+        arguments:
+            -    "@resource.categorie"               # Resource
+            -    [ "GET"]                 # Methods
+            -    "/categories/{id}/questions"           # Path
+            -    "AppBundle:Question:question"         # Controller
+            -    "my_custom_route"                 # Route name
+            -    # Context (will be present in Hydra documentation)
+                 "@type":       "hydra:Operation"
+                 "hydra:title": "A custom operation"
+                 "returns":     "xmls:string"
+    
+    resource.categorie:
+        parent:    "api.resource"
+        arguments: [ "AppBundle\Entity\Categorie" ]
+        calls:
+            -      [ "initItemOperations", [ [ "@resource.questions.operation.get" ] ] ]
+        tags:      [ { name: "api.resource" } ]
+    
+    resource.question:
+        parent:    "api.resource"
+        arguments: [ "AppBundle\Entity\\Question" ]
+        calls:
+            -     method:    "initCollectionOperations"
+                  arguments: [ [  ] ]
+        tags:      [ { name: "api.resource" } ]
+        
+    resource.reponse:
+        parent:    "api.resource"
+        arguments: [ "AppBundle\Entity\\Reponse" ]
+        tags:      [ { name: "api.resource" } ]
+    
+                     
+    resource.quizz.collection_operation.register:
+      class:   "Dunglas\\ApiBundle\\Api\\Operation\\Operation"
+      public:  false
+      factory: [ "@api.operation_factory", "createCollectionOperation" ]
+      arguments:
+          -    "@resource.quizz"              # Resource
+          -    [ "POST" ]                        # Methods
+          -    "/quizzs/register"              # Path
+          -    "AppBundle:Quizz:register"     # Controller
+          -    "api_quizz_registration"           # Route name
+          -    # Context (will be present in Hydra documentation)
+               "@type":       "hydra:Operation"
+               "hydra:title": "Inscription client"
+               "returns":     "xmls:string"
+
+    resource.quizz:
+      parent:    "api.resource"
+      arguments: [ "AppBundle\Entity\Quizz" ]
+      calls:
+          - method:    "initCollectionOperations"
+            arguments: [ [ "@resource.quizz.collection_operation.register" ] ]
+      tags: [ { name: "api.resource" } ]

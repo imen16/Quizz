@@ -65,3 +65,12 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+dunglas_api:
+    title:       "API test"                    # The title of the API.
+    description: "The full description of your API" # The description of the API.
+nelmio_api_doc: ~
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: UserBundle\Entity\User

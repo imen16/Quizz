@@ -18,7 +18,9 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "dunglas/api-bundle" : "^1.0",
+        "nelmio/api-doc-bundle" : "2.12.0",
+        "friendsofsymfony/user-bundle" : "~2.0@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -43,10 +45,7 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
-        "platform": {
-            "php": "5.3.9"
-        }
+        "bin-dir": "bin"
     },
     "extra": {
         "symfony-app-dir": "app",
